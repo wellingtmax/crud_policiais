@@ -1,0 +1,61 @@
+<div class="lista-container">
+  <h2>Lista de Policiais</h2>
+
+  <div class="filtro-container">
+    <input
+      type="text"
+      [(ngModel)]="filtro"
+      placeholder="Filtrar por CPF, RG Civil ou RG Militar"
+      class="filtro-input"
+      (keyup.enter)="aplicarFiltro()"
+    >
+    <button (click)="aplicarFiltro()" class="btn btn-primary">Filtrar</button>
+    <button (click)="limparFiltro()" class="btn btn-secondary">Limpar</button>
+  </div>
+
+  <div *ngIf="carregando" class="carregando">
+    Carregando...
+  </div>
+
+  <div *ngIf="erro" class="alert alert-danger">
+    {{ erro }}
+  </div>
+
+  <div *ngIf="!carregando && policiais.length === 0" class="sem-registros">
+    Nenhum policial encontrado.
+  </div>
+
+  <table *ngIf="!carregando && policiais.length > 0" class="policiais-table">
+    <thead>
+      <tr>
+        <th>NOME DE ESCALA</th>
+        <th>RG Civil</th>
+        <th>RG Militar</th>
+        <th>CPF</th>
+        <th>Data de Nascimento</th>
+        <th>Matrícula</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let policial of policiais">
+        <td>{{ policial.nome_de_escala }}</td>
+        <td>{{ policial.rg_civil }}</td>
+        <td>{{ policial.rg_militar }}</td>
+        <td>{{ policial.cpf }}</td>
+        <td>{{ policial.data_nascimento | date:'dd/MM/yyyy' }}</td>
+        <td>{{ policial.matricula }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!carregando && policiais.length > 0" class="mobile-view">
+    <div *ngFor="let policial of policiais" class="policial-card">
+      <div class="card-item"><strong>NOME DE ESCALA:</strong> {{ policial.nome_de_escala }}</div>
+      <div class="card-item"><strong>RG Civil:</strong> {{ policial.rg_civil }}</div>
+      <div class="card-item"><strong>RG Militar:</strong> {{ policial.rg_militar }}</div>
+      <div class="card-item"><strong>CPF:</strong> {{ policial.cpf }}</div>
+      <div class="card-item"><strong>Data Nasc.:</strong> {{ policial.data_nascimento | date:'dd/MM/yyyy' }}</div>
+      <div class="card-item"><strong>Matrícula:</strong> {{ policial.matricula }}</div>
+    </div>
+  </div>
+</div>
